@@ -43,6 +43,6 @@ services:
     image: redis:7-bookworm
     restart: unless-stopped
 
-  networks:
-    nocodb-nw:
-      driver: bridge
+networks:
+  nocodb-nw:
+    driver: bridge
