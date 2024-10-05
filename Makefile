@@ -16,10 +16,9 @@ nginx-init: prod-nginx-link
 # docker swarm
 STACK_NAME = nocodb
 COMPOSE_FILE = ./docker-swarm.yml
-ENV_FILE = .env
 
 prod-start:
-	docker stack deploy --env-file $(ENV_FILE) -c $(COMPOSE_FILE) $(STACK_NAME)
+	docker stack deploy -c $(COMPOSE_FILE) $(STACK_NAME)
 
 prod-update: prod-start
 
