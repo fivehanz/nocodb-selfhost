@@ -62,4 +62,4 @@ services:
 
 networks:
   nocodb-nw:
-    driver: bridge
+    driver: overlay
