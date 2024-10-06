@@ -18,13 +18,12 @@ STACK_NAME = nocodb
 COMPOSE_FILE = ./docker-swarm.yml
 
 prod-start:
-	docker stack deploy -c $(COMPOSE_FILE) $(STACK_NAME)
+	docker stack deploy -c $(COMPOSE_FILE) $(STACK_NAME) --detach=true
 
 prod-update: prod-start
 
 prod-force-update:
 	docker service update --force $(STACK_NAME)_nocodb
-	docker service update --force $(STACK_NAME)_nocodb_root_db
 	docker service update --force $(STACK_NAME)_nocodb_redis
 
 prod-stop:
