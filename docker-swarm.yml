@@ -55,7 +55,7 @@ services:
     env_file:
       - .env
     deploy:
-      replicas: 2  # Run two replicas for Redis
+      replicas: 1  # Run two replicas for Redis
       restart_policy:
         condition: any
 
