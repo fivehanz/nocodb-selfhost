@@ -3,7 +3,7 @@ version: '3.8'
 services: 
   nocodb: 
     depends_on: 
-      # - nocodb_root_db
+      - nocodb_root_db
       - nocodb_redis
     environment: 
       NC_AUTH_JWT_SECRET: ${NC_AUTH_JWT_SECRET}
@@ -24,28 +24,29 @@ services:
       restart_policy:
         condition: any
   
-  # nocodb_root_db:
-  #   networks:
-  #     - nocodb-nw
-  #   environment: 
-  #     POSTGRES_DB: nocodb-db
-  #     POSTGRES_PASSWORD: password
-  #     POSTGRES_USER: postgres
-  #     PGDATA: /var/lib/postgresql/db
-  #   healthcheck: 
-  #     interval: 10s
-  #     retries: 10
-  #     test: "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""
-  #     timeout: 2s
-  #   image: postgres:16-alpine
-  #   restart: unless-stopped
-  #   env_file:
-  #     - .env
-  #   volumes: 
-  #     - /mnt/glusterfs/db.jsmx.org/postgresql/db:/var/lib/postgresql/db
-  #   deploy:
-  #     restart_policy:
-  #       condition: any
+  nocodb_root_db:
+    networks:
+      - nocodb-nw
+    environment: 
+      POSTGRES_DB: nocodb
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      PGDATA: /var/lib/postgresql/db
+    healthcheck: 
+      interval: 10s
+      retries: 10
+      test: "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""
+      timeout: 2s
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes: 
+      - /mnt/glusterfs/db.jsmx.org/postgresql/db:/var/lib/postgresql/db
+    deploy:
+      replicas: 1 
+      restart_policy:
+        condition: any
 
   nocodb_redis:
     networks:
